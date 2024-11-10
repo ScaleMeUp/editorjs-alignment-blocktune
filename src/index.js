@@ -61,7 +61,11 @@ class AlignmentBlockTune {
             closeOnActivate: true,
         }));
 
+        const separator = { type: 'separator' };
+
         return [
+            ...(this.settings?.viewSeparatorAbove ? [separator] : []),
+
             {
                 name: 'alignment',
                 title: this.api.i18n.t('Alignment'),
@@ -70,7 +74,10 @@ class AlignmentBlockTune {
                     items: options
                 },
             },
-        ];
+
+            ...(this.settings?.viewSeparatorBelow ? [separator] : []),
+        ]
+            .filter((item) => Object.keys(item).length);
     }
 
     save() {

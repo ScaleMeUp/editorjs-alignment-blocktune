@@ -14,6 +14,10 @@ new EditorJS({
     tools: {
         textAlignment: {
             class: AlignmentBlockTune,
+            config: {
+                viewSeparatorAbove: true,
+                viewSeparatorBelow: true,
+            }
         },
         
         tunes: ['textAlignment'],
