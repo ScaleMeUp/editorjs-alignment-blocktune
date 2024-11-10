@@ -53,27 +53,74 @@
    Read more in Tool's README file. For example:
    https://github.com/editor-js/header#installation
    -->
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.20.1/dist/editor.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.30.6/dist/editorjs.umd.min.js"></script>
+  <script src="../dist/bundle.js" onload="document.getElementById('hint').hidden = true"></script><!-- Header -->
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/table@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/code@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@2.11.6/dist/paragraph.umd.min.js"></script>
 
   <!-- Initialization -->
   <script>
     const saveButton = document.getElementById('saveButton');
+
     var editor = new EditorJS({
       holder: 'editorjs',
+
       tools: {
-        header:Header
+        embed: {
+          class: Embed,
+          inlineToolbar: true,
+        },
+        table: {
+          class: Table,
+          inlineToolbar: true,
+        },
+        code: {
+          class: CodeTool,
+          inlineToolbar: true,
+        },
+        raw: {
+          class: RawTool,
+          inlineToolbar: true,
+        },
+        checklist: {
+          class: Checklist,
+          inlineToolbar: true,
+        },
+        textAlignment: {
+            class: AlignmentBlockTune,
+            inlineToolbar: true,
+        },
+        image: {
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:8008/uploadFile',
+              byUrl: 'http://localhost:8008/fetchUrl',
+            }
+          }
+        },
       },
+
+      tunes: [
+        'textAlignment'
+      ],
+
+      data: {},
+
       onReady: function(){
         saveButton.click();
       },
-      onChange: function() {
-        console.log('something changed');
-      },
     });
+
     saveButton.addEventListener('click', function () {
       editor.save().then((savedData) => {
         cPreview.show(savedData, document.getElementById("output"));
+        console.log('data', JSON.stringify(savedData))
       });
     });
   </script>
