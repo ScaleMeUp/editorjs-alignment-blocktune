@@ -56,6 +56,8 @@ class AlignmentBlockTune {
                 this.wrapper.classList.remove(this._CSS.alignment.center);
 
                 this.wrapper.classList.add(this._CSS.alignment[this.data.alignment]);
+
+                this.block.dispatchChange();
             },
             isActive: this.data.alignment === item.value,
             closeOnActivate: true,
